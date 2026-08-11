@@ -77,8 +77,11 @@ function LoginForm() {
           } else {
             localStorage.setItem("LMS_DATA_MODE", "REAL_MODE");
           }
+          const userEmail = email.trim().toLowerCase();
+          const isAdmin = userEmail.includes("admin") || userEmail.includes("teacher") || userEmail.includes("manager");
+          const targetUrl = isAdmin ? "/admin" : "/dashboard";
+          window.location.href = targetUrl;
         }
-        router.push("/dashboard");
       }
     } catch (err) {
       setAuthError("Connection error. Ensure your NextAuth parameters are correct.");

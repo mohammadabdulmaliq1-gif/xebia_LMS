@@ -19,6 +19,7 @@ export default withAuth(
     pages: {
       signIn: "/signin",
     },
+    secret: process.env.NEXTAUTH_SECRET || "xebia-lms-secret-key-production-2026-very-secure-key",
   }
 );
 
