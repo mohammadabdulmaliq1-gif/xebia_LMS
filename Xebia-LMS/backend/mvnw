@@ -1,0 +1,21 @@
+#!/bin/sh
+MAVEN_VERSION="3.9.6"
+MAVEN_HOME="$(dirname "$0")/.mvn/apache-maven-$MAVEN_VERSION"
+MAVEN_ZIP="$(dirname "$0")/.mvn/maven-$MAVEN_VERSION-bin.zip"
+
+if [ ! -f "$MAVEN_HOME/bin/mvn" ]; then
+    echo "Maven wrapper: Downloading Apache Maven $MAVEN_VERSION..."
+    mkdir -p "$(dirname "$0")/.mvn"
+    curl -sfL "https://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.zip" -o "$MAVEN_ZIP"
+    if [ ! -f "$MAVEN_ZIP" ]; then
+        echo "Error: Failed to download Maven."
+        exit 1
+    fi
+    echo "Maven wrapper: Extracting Maven..."
+    mkdir -p "$(dirname "$0")/.mvn/temp_extract"
+    unzip -q "$MAVEN_ZIP" -d "$(dirname "$0")/.mvn/temp_extract"
+    mv "$(dirname "$0")/.mvn/temp_extract/apache-maven-$MAVEN_VERSION" "$MAVEN_HOME"
+    rm -rf "$(dirname "$0")/.mvn/temp_extract" "$MAVEN_ZIP"
+fi
+
+exec "$MAVEN_HOME/bin/mvn" "$@"

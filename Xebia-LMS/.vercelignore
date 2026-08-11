@@ -1,0 +1,4 @@
+backend/
+frontend-react/
+node_modules/
+.git/
