@@ -1,3 +1,10 @@
+if (!process.env.NEXTAUTH_SECRET) {
+  process.env.NEXTAUTH_SECRET = "xebia-lms-secret-key-production-2026-very-secure-key";
+}
+if (!process.env.NEXTAUTH_URL && process.env.VERCEL_URL) {
+  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_URL}`;
+}
+
 import fs from "fs";
 import path from "path";
 import NextAuth from "next-auth";
@@ -24,7 +31,7 @@ function loadEnvLocal() {
 
 loadEnvLocal();
 
-const nextAuthSecret = process.env.NEXTAUTH_SECRET || "dev-secret";
+const nextAuthSecret = process.env.NEXTAUTH_SECRET || "xebia-lms-secret-key-production-2026-very-secure-key";
 const nextAuthUrl = process.env.NEXTAUTH_URL || "http://localhost:3000";
 let nextAuthApiUrl = process.env.NEXTAUTH_API_URL || process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 if (!nextAuthApiUrl.endsWith("/api") && !nextAuthApiUrl.endsWith("/api/")) {
